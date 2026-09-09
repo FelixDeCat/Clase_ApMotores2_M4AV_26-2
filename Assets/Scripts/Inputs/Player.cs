@@ -8,18 +8,40 @@ public class Player : MonoBehaviour
     [SerializeField] ButtonByEvent up;
     [SerializeField] ButtonByEvent down;
 
-    [SerializeField] ButtonByInterface btn;
+    [SerializeField] InputByStick stick;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] float speed = 5f;
+
+    //[SerializeField] ButtonByInterface btn;
+
+
+    Vector3 dir = Vector3.zero;
+
     void Start()
     {
-        left.AddInteraction(SetInput);
-        right.AddInteraction(SetInput);
-        up.AddInteraction(SetInput);
-        down.AddInteraction(SetInput);
+        //left.AddInteraction(SetInput);
+        //right.AddInteraction(SetInput);
+        //up.AddInteraction(SetInput);
+        //down.AddInteraction(SetInput);
 
-        btn.AddCallback(OnExecutePepito);
-        
+
+
+    }
+
+    private void Update()
+    {
+#if UNITY_ANDROID
+        dir.x = stick.Dir.x;
+        dir.z = stick.Dir.y;
+#else
+        dir.x = Input.GetAxis("Horizontal");
+        dir.z = Input.GetAxis("Vertical");
+#endif
+
+
+
+        // El de siempre
+        transform.position = transform.position + dir * speed * Time.deltaTime;
     }
 
     void OnExecute()
@@ -37,17 +59,17 @@ public class Player : MonoBehaviour
     }
 
 
-    [SerializeField] Vector2 dir;
-    void SetInput(Vector2 v2)
-    {
-        dir = v2;
-    }
+    //[SerializeField] Vector2 dir;
+    //void SetInput(Vector2 v2)
+    //{
+    //    dir = v2;
+    //}
 
-    // Update is called once per frame
-    void Update()
-    {
-        //left.Dir
-    }
+    //// Update is called once per frame
+    //void Update()
+    //{
+    //    //left.Dir
+    //}
 
 
     public void ToqueLaT()
