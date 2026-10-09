@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
 using System.Threading.Tasks;
+using UnityEngine.Networking;
 
 public class LogAnonimo : MonoBehaviour
 {
@@ -39,12 +40,5 @@ public class LogAnonimo : MonoBehaviour
             print("RequestFailedException: " + ex.Message);
         }
 
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
