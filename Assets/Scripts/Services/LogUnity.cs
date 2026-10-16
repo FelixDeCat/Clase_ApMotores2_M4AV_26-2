@@ -11,6 +11,9 @@ public class LogUnity : MonoBehaviour
         await UnityServices.InitializeAsync();
 
         PlayerAccountService.Instance.SignedIn += EVENT_ONSignedIn;
+
+        RemoteConfigManager.ReFetch();
+
     }
 
     public async void Button_SignInWithUnity()
@@ -20,7 +23,7 @@ public class LogUnity : MonoBehaviour
 
     async Task SignIn()
     {
-        await PlayerAccountService.Instance.StartSignInAsync();
+        await PlayerAccountService.Instance.StartSignInAsync(); // abre una web
     }
 
     async void EVENT_ONSignedIn()

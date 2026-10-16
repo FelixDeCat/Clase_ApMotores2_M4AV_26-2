@@ -4,6 +4,7 @@ using Unity.Services.Core;
 using Unity.Services.Authentication;
 using Unity.Services.RemoteConfig;
 using System;
+using System.Threading.Tasks;
 
 
 
@@ -26,9 +27,11 @@ public class RemoteConfigManager : MonoBehaviour
 
     void _subscribeKey(string key)
     {
-        
+
     }
 
+
+    RuntimeConfig runtime;
     async void Start()
     {
         await UnityServices.InitializeAsync();
@@ -41,12 +44,12 @@ public class RemoteConfigManager : MonoBehaviour
         AuthenticationService.Instance.SignedIn += EVENT_OnSignedIn;
         RemoteConfigService.Instance.FetchCompleted += Apply;
 
-       var runtime =  await RemoteConfigService.Instance.FetchConfigsAsync(new MyCustomUserAttributes(5), new MyCustomAppAttributes());
+        runtime = await RemoteConfigService.Instance.FetchConfigsAsync(new MyCustomUserAttributes(7), new MyCustomAppAttributes());
 
 
         int initialLife = runtime.GetInt("InitialLife", 100);
 
-        Debug.Log(initialLife); // 120
+        //Debug.Log(initialLife); // 120 -- 300 si es mayor o igual a nivel 5
 
     }
 
@@ -54,6 +57,27 @@ public class RemoteConfigManager : MonoBehaviour
     {
 
     }
+
+    public async static void ReFetch()
+    {
+        instance._reFetch();
+    }
+    async void _reFetch()
+    {
+        runtime = await RemoteConfigService.Instance.FetchConfigsAsync(new MyCustomUserAttributes(5), new MyCustomAppAttributes());
+
+    }
+
+    public void SubscribeString(string key, string defVal)
+    {
+
+    }
+    public void SubscribeInt(string key, int defVal)
+    {
+
+    }
+
+
 
     void Apply(ConfigResponse response)
     {
@@ -70,17 +94,18 @@ public class RemoteConfigManager : MonoBehaviour
         }
     }
 
-
-}
-
-struct MyCustomUserAttributes
-{
-    int level;
-    public MyCustomUserAttributes(int level)
+    [System.Serializable]
+    struct MyCustomUserAttributes
     {
-        this.level = level;
+        public int level;
+        public MyCustomUserAttributes(int level)
+        {
+            this.level = level;
+        }
     }
 }
+
+
 struct MyCustomAppAttributes
 {
 

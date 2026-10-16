@@ -90,6 +90,10 @@ public class LogByEmail : MonoBehaviour
             // Notify the player with the proper error message
             Debug.LogException(ex);
         }
+        catch (System.Exception ex)
+        {
+            Debug.Log("Error raro: " + ex);
+        }
     }
 
 }
