@@ -7,7 +7,6 @@ public class SaveFront : MonoBehaviour
     [SerializeField] Button btn_save;
     [SerializeField] Button btn_load;
 
-
     private void Awake()
     {
         btn_save.onClick.AddListener(OnClick_SAVE);

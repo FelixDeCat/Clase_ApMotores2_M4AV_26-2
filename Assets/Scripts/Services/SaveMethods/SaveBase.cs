@@ -14,13 +14,14 @@ public abstract class SaveBase : MonoBehaviour
         GetComponent<SaveFront>().SubscribeToButtons(() => { Load(); }, Save);
     }
 
-    public void Save()
+    void Save()
     {
+        Debug.Log("Intentando Guardar");
         SaveData data = new SaveData(name_to_save, level_to_save, currency_to_save);
         OnSave(data);
     }
 
-    public SaveData Load()
+    SaveData Load()
     {
         var data = OnLoad();
 
