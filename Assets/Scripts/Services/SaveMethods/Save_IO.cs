@@ -33,15 +33,22 @@ public class Save_IO : SaveBase
     {
         SaveData data = new SaveData();
 
+        // Check();
+
         if (File.Exists(path))
         {
             string raw = File.ReadAllText(path);
 
-            string[] converted = raw.Split(SIMPLE_SPLIT);
+            string[] converted = raw.Split(',');
 
             data.Set_Name(converted[0]);
             data.Set_Level(int.Parse(converted[1]));
             data.Set_Currency(float.Parse(converted[2]));
+        }
+        else
+        {
+            System.Exception ex = new System.Exception("El path no existe");
+            throw ex;
         }
 
         return data;

@@ -10,8 +10,9 @@ public abstract class SaveBase : MonoBehaviour
     public float currency_to_save = 0f;
 
     private void Awake()
-    {
-        GetComponent<SaveFront>().SubscribeToButtons(() => { Load(); }, Save);
+    {   
+        var save = GetComponent<SaveFront>();
+        if(save!= null) save.SubscribeToButtons(() => { Load(); }, Save);
     }
 
     void Save()
